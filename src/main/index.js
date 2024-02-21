@@ -2,6 +2,7 @@ const mysql = require("mysql");
 const express = require("express");
 const { createDatabase } = require("./database/createDatabase");
 const { authentication } = require("./domain/Authentication/authentication");
+const { getUserId } = require("../main/component/getUserId");
 const cors = require("cors");
 
 var app = express();
@@ -28,3 +29,4 @@ app.listen(8080, () => {
 
 createDatabase(con);
 authentication(app, con);
+getUserId(app, con);
