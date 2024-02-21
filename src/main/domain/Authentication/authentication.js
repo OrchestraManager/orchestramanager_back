@@ -1,7 +1,6 @@
 const { v4: uuidv4 } = require('uuid');
 const bcrypt = require("bcrypt");
-const jwt = require('jsonwebtoken');
-require("dotenv").config();
+const {token_generator} = require("../../util/jwt");
 
 function authentication(app, con) {
 
@@ -28,7 +27,6 @@ function authentication(app, con) {
     // Sign Up.
     app.post("/signup", (req, res) => {
         
-        console.log(req.body);
         const { userName, userId, userPW } = req.body;
         const useruuid = get_uuid();  // Get uuid.
         const sql = `INSERT INTO users SET ?`;
@@ -117,10 +115,5 @@ function compare_bcrypt(plaintext, ciphertext, callback) {
     });
 }
 
-// Generate token.
-function token_generator(uid) {
-    const key = process.env.SECRET_KEY;
-    return jwt.sign({ uid: uid, exp: parseInt(Date.now()/1000) + 60 }, key);
-}
 
 module.exports.authentication = authentication;
